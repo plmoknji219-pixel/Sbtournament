@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - SB Tournament</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      color: #38bdf8;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 25px;
+    }
+
+    .payment-info {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .payment-info p {
+      margin: 8px 0;
+      color: #cbd5e1;
+    }
+
+    .payment-info strong {
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: bold;
+      color: #e2e8f0;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #38bdf8;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      border: 0;
+      border-radius: 8px;
+      background: #0284c7;
+      color: #fff;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0369a1;
+    }
+
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+    }
+
+    #message {
+      display: none;
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .success {
+      display: block !important;
+      background: #14532d;
+      color: #bbf7d0;
+    }
+
+    .error {
+      display: block !important;
+      background: #7f1d1d;
+      color: #fecaca;
+    }
+
+    .status-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 700px) {
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111827;
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SB Tournament</div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="registration.html">Registration</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="player-dashboard.html">Dashboard</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="payment.html">Payment</a>
+    <a href="support.html">Support</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <div class="card">
+
+    <h1>💳 Tournament Payment</h1>
+
+    <p class="subtitle">
+      Submit your payment information for verification.
+    </p>
+
+    <div class="payment-info">
+      <p>💰 <strong>bKash:</strong> 01825265553</p>
+      <p>💰 <strong>Nagad:</strong> 01703610065</p>
+      <p>⚠️ Replace the numbers above with your actual payment number.</p>
+    </div>
+
+    <form id="paymentForm">
+
+      <label for="playerName">Player Name</label>
+      <input
+        type="text"
+        id="playerName"
+        placeholder="Enter player name"
+        required
+      >
+
+      <label for="phone">Phone Number</label>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="01703610065"
+        maxlength="11"
+        required
+      >
+
+      <label for="method">Payment Method</label>
+      <select id="method" required>
+        <option value="">Select method</option>
+        <option value="bKash">bKash</option>
+        <option value="Nagad">Nagad</option>
+      </select>
+
+      <label for="transactionId">Transaction ID</label>
+      <input
+        type="text"
+        id="transactionId"
+        placeholder="Enter transaction ID"
+        required
+      >
+
+      <label for="amount">Amount</label>
+      <input
+        type="number"
+        id="amount"
+        placeholder="Enter amount"
+        min="1"
+        required
+      >
+
+      <button type="submit" id="submitBtn">
+        Submit Payment
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+
+    <a href="payment-status.html" class="status-link">
+      Check Payment Status
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 SB Tournament. All Rights Reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
+
+  const SUPABASE_URL =
+    "https://ofcpuiubovcjxucqynyw.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+  const form = document.getElementById("paymentForm");
+  const message = document.getElementById("message");
+  const submitBtn = document.getElementById("submitBtn");
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const playerName =
+      document.getElementById("playerName").value.trim();
+
+    const phone =
+      document.getElementById("phone").value.trim();
+
+    const method =
+      document.getElementById("method").value;
+
+    const transactionId =
+      document.getElementById("transactionId").value.trim();
+
+    const amount =
+      Number(document.getElementById("amount").value);
+
+    if (!playerName || !phone || !method ||
+        !transactionId || !amount) {
+
+      showMessage(
+        "Please fill in all fields.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (!/^01[0-9]{9}$/.test(phone)) {
+
+      showMessage(
+        "Please enter a valid 11-digit Bangladesh phone number.",
+        "error"
+      );
+
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    try {
+
+      // Check duplicate transaction ID
+      const { data: existing, error: checkError } =
+        await supabaseClient
+          .from("payments")
+          .select("id")
+          .eq("transaction_id", transactionId)
+          .limit(1);
+
+      if (checkError) {
+        throw checkError;
+      }
+
+      if (existing && existing.length > 0) {
+
+        showMessage(
+          "This transaction ID has already been submitted.",
+          "error"
+        );
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Payment";
+
+        return;
+      }
+
+      // Insert payment
+      const { error } = await supabaseClient
+        .from("payments")
+        .insert([{
+          player_name: playerName,
+          phone: phone,
+          payment_method: method,
+          transaction_id: transactionId,
+          amount: amount,
+          status: "pending"
+        }]);
+
+      if (error) {
+        throw error;
+      }
+
+      showMessage(
+        "Payment submitted successfully. Status: Pending.",
+        "success"
+      );
+
+      form.reset();
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "Payment submission failed. Please check your Supabase table and RLS policy.",
+        "error"
+      );
+
+    } finally {
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Payment";
+
+    }
+
+  });
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+  }
+</script>
+
+</body>
+</html>
