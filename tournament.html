@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournaments - SB Tournament</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #38bdf8;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 35px;
+    }
+
+    .tournament-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .tournament-card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      border: 1px solid #334155;
+      transition: .2s;
+    }
+
+    .tournament-card:hover {
+      transform: translateY(-4px);
+      border-color: #38bdf8;
+    }
+
+    .icon {
+      font-size: 45px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .tournament-card h2 {
+      text-align: center;
+      color: #f8fafc;
+      margin-bottom: 18px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #334155;
+      color: #cbd5e1;
+    }
+
+    .info strong {
+      color: #fff;
+    }
+
+    .status {
+      text-align: center;
+      margin: 18px 0;
+      padding: 8px;
+      border-radius: 7px;
+      background: #166534;
+      color: #bbf7d0;
+      font-weight: bold;
+    }
+
+    .join-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      padding: 13px;
+      background: #0284c7;
+      color: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .join-btn:hover {
+      background: #0369a1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 30px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 850px) {
+      .tournament-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111827;
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .tournament-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SB Tournament</div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="registration.html">Registration</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="payment.html">Payment</a>
+    <a href="support.html">Support</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <h1 class="page-title">Available Tournaments</h1>
+
+  <p class="subtitle">
+    Choose your tournament and register now.
+  </p>
+
+  <div class="tournament-grid">
+
+    <!-- Tournament 1 -->
+    <div class="tournament-card">
+      <div class="icon">🎮</div>
+
+      <h2>Free Fire Solo</h2>
+
+      <div class="info">
+        <span>Entry Fee</span>
+        <strong>৳20</strong>
+      </div>
+
+      <div class="info">
+        <span>Prize Pool</span>
+        <strong>৳500</strong>
+      </div>
+
+      <div class="info">
+        <span>Players</span>
+        <strong>48</strong>
+      </div>
+
+      <div class="info">
+        <span>Mode</span>
+        <strong>Solo</strong>
+      </div>
+
+      <div class="status">Registration Open</div>
+
+      <a class="join-btn" href="registration.html">
+        Join Tournament
+      </a>
+    </div>
+
+
+    <!-- Tournament 2 -->
+    <div class="tournament-card">
+      <div class="icon">🔥</div>
+
+      <h2>Free Fire Duo</h2>
+
+      <div class="info">
+        <span>Entry Fee</span>
+        <strong>৳40</strong>
+      </div>
+
+      <div class="info">
+        <span>Prize Pool</span>
+        <strong>৳1,000</strong>
+      </div>
+
+      <div class="info">
+        <span>Teams</span>
+        <strong>24</strong>
+      </div>
+
+      <div class="info">
+        <span>Mode</span>
+        <strong>Duo</strong>
+      </div>
+
+      <div class="status">Registration Open</div>
+
+      <a class="join-btn" href="registration.html">
+        Join Tournament
+      </a>
+    </div>
+
+
+    <!-- Tournament 3 -->
+    <div class="tournament-card">
+      <div class="icon">🏆</div>
+
+      <h2>Free Fire Squad</h2>
+
+      <div class="info">
+        <span>Entry Fee</span>
+        <strong>৳80</strong>
+      </div>
+
+      <div class="info">
+        <span>Prize Pool</span>
+        <strong>৳2,000</strong>
+      </div>
+
+      <div class="info">
+        <span>Teams</span>
+        <strong>12</strong>
+      </div>
+
+      <div class="info">
+        <span>Mode</span>
+        <strong>Squad</strong>
+      </div>
+
+      <div class="status">Registration Open</div>
+
+      <a class="join-btn" href="registration.html">
+        Join Tournament
+      </a>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 SB Tournament. All Rights Reserved.
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
+</script>
+
+</body>
+          </html>
