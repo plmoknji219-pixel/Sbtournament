@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SB Tournament - Support</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .faq {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .faq:last-child {
+      border-bottom: none;
+    }
+
+    .faq strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    #message {
+      margin-top: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>SB Tournament</h1>
+  <p>Support & Help Center</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>🆘 Contact Support</h2>
+
+    <form id="supportForm">
+      <input
+        type="text"
+        id="name"
+        placeholder="Your Name"
+        required
+      >
+
+      <input
+        type="text"
+        id="gameId"
+        placeholder="Game UID"
+        required
+      >
+
+      <input
+        type="text"
+        id="subject"
+        placeholder="Problem Subject"
+        required
+      >
+
+      <textarea
+        id="problem"
+        placeholder="Describe your problem..."
+        required
+      ></textarea>
+
+      <button type="submit">Send Support Request</button>
+    </form>
+
+    <div id="message"></div>
+  </div>
+
+  <div class="card">
+    <h2>❓ FAQ</h2>
+
+    <div class="faq">
+      <strong>How can I join a tournament?</strong>
+      <p>Open the Tournament page, select a tournament and use the Join Match option.</p>
+    </div>
+
+    <div class="faq">
+      <strong>Where can I see my match?</strong>
+      <p>Open your Player Dashboard to check your joined matches.</p>
+    </div>
+
+    <div class="faq">
+      <strong>What if my match room information is missing?</strong>
+      <p>Contact support and provide your Game UID and tournament information.</p>
+    </div>
+
+    <div class="faq">
+      <strong>What if I entered the wrong Game UID?</strong>
+      <p>Send a support request with the correct information.</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="back">← Back to Home</a>
+
+</div>
+
+<script>
+  const form = document.getElementById("supportForm");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const gameId = document.getElementById("gameId").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const problem = document.getElementById("problem").value.trim();
+
+    if (!name || !gameId || !subject || !problem) {
+      message.textContent = "Please fill in all fields.";
+      return;
+    }
+
+    /*
+      P12 basic version:
+      The form is ready, but Supabase support table
+      can be connected later when the table is created.
+    */
+
+    message.textContent =
+      "Support request prepared successfully. Please connect the support table to save it.";
+
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
