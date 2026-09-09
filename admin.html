@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - SB Tournament</title>
-
-  <style>
+  <title>Admin Panel - SB Tournament</title>  <style>
     * {
       margin: 0;
       padding: 0;
@@ -158,6 +155,16 @@
       line-height: 1.5;
     }
 
+    .success {
+      background: #064e3b;
+      color: #a7f3d0;
+    }
+
+    .error {
+      background: #7f1d1d;
+      color: #fecaca;
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -207,17 +214,8 @@
         margin: 20px auto;
       }
     }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <div class="logo">SB Tournament Admin</div>
-
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
-  <nav id="navMenu">
+  </style></head><body><header>
+  <div class="logo">SB Tournament Admin</div>  <div class="menu-btn" onclick="toggleMenu()">☰</div>  <nav id="navMenu">
     <a href="index.html">Home</a>
     <a href="tournament.html">Tournaments</a>
     <a href="registration.html">Registration</a>
@@ -226,125 +224,144 @@
     <a href="payment.html">Payment</a>
     <a href="support.html">Support</a>
   </nav>
-</header>
-
-<main class="container">
-
-  <section class="title">
+</header><main class="container">  <section class="title">
     <h1>⚙️ Admin Panel</h1>
     <p>Manage SB Tournament from one place.</p>
-  </section>
+  </section>  <section class="stats"><div class="stat">
+  <div class="stat-icon">👥</div>
+  <h3>Total Players</h3>
+  <strong id="playersCount">—</strong>
+</div>
 
-  <section class="stats">
+<div class="stat">
+  <div class="stat-icon">🏆</div>
+  <h3>Tournaments</h3>
+  <strong id="tournamentsCount">—</strong>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">👥</div>
-      <h3>Total Players</h3>
-      <strong id="playersCount">0</strong>
-    </div>
+<div class="stat">
+  <div class="stat-icon">💳</div>
+  <h3>Payments</h3>
+  <strong id="paymentsCount">...</strong>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">🏆</div>
-      <h3>Tournaments</h3>
-      <strong id="tournamentsCount">3</strong>
-    </div>
+<div class="stat">
+  <div class="stat-icon">🎮</div>
+  <h3>Matches</h3>
+  <strong id="matchesCount">—</strong>
+</div>
 
-    <div class="stat">
-      <div class="stat-icon">💳</div>
-      <h3>Payments</h3>
-      <strong id="paymentsCount">0</strong>
-    </div>
+  </section>  <section class="panel"><h2>Admin Actions</h2>
 
-    <div class="stat">
-      <div class="stat-icon">🎮</div>
-      <h3>Matches</h3>
-      <strong id="matchesCount">0</strong>
-    </div>
+<div class="actions">
 
-  </section>
+  <a href="registration.html" class="action">
+    👥 Registrations
+  </a>
 
-  <section class="panel">
+  <a href="tournament.html" class="action">
+    🏆 Tournaments
+  </a>
 
-    <h2>Admin Actions</h2>
+  <a href="leaderboard.html" class="action">
+    📊 Leaderboard
+  </a>
 
-    <div class="actions">
+  <a href="payment.html" class="action">
+    💳 Payments
+  </a>
 
-      <a href="registration.html" class="action">
-        👥 Registrations
-      </a>
+  <a href="player-dashboard.html" class="action secondary">
+    👤 Player Dashboard
+  </a>
 
-      <a href="tournament.html" class="action">
-        🏆 Tournaments
-      </a>
+  <a href="support.html" class="action secondary">
+    🛠️ Support
+  </a>
 
-      <a href="leaderboard.html" class="action">
-        📊 Leaderboard
-      </a>
+</div>
 
-      <a href="payment.html" class="action">
-        💳 Payments
-      </a>
+  </section>  <section class="panel"><h2>System Status</h2>
 
-      <a href="player-dashboard.html" class="action secondary">
-        👤 Player Dashboard
-      </a>
+<div id="systemStatus" class="notice">
+  Connecting to Supabase...
+</div>
 
-      <a href="support.html" class="action secondary">
-        🛠️ Support
-      </a>
-
-    </div>
-
-  </section>
-
-  <section class="panel">
-
-    <h2>System Status</h2>
-
-    <div class="notice">
-      Admin panel is ready. Database management and secure admin
-      authentication can be connected in the next development stage.
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
+  </section></main><footer>
   © 2026 SB Tournament. Admin Panel
-</footer>
+</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 
-<script>
+  const SUPABASE_URL =
+    "https://nbpajmpaoaipithpoocj.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
   function toggleMenu() {
-    document.getElementById("navMenu").classList.toggle("active");
+    document
+      .getElementById("navMenu")
+      .classList.toggle("active");
   }
 
-  /*
-    Current P6 uses demo statistics.
-    Supabase admin data will be connected after
-    the required database tables and RLS policies
-    are finalized.
-  */
 
-  const adminStats = {
-    players: 0,
-    tournaments: 3,
-    payments: 0,
-    matches: 0
-  };
+  async function loadPaymentCount() {
 
-  document.getElementById("playersCount").textContent =
-    adminStats.players;
+    const paymentsElement =
+      document.getElementById("paymentsCount");
 
-  document.getElementById("tournamentsCount").textContent =
-    adminStats.tournaments;
+    const statusElement =
+      document.getElementById("systemStatus");
 
-  document.getElementById("paymentsCount").textContent =
-    adminStats.payments;
+    try {
 
-  document.getElementById("matchesCount").textContent =
-    adminStats.matches;
-</script>
+      const { count, error } =
+        await supabaseClient
+          .from("payments")
+          .select("*", {
+            count: "exact",
+            head: true
+          });
 
-</body>
-</html>
+      if (error) {
+        throw error;
+      }
+
+      paymentsElement.textContent =
+        count ?? 0;
+
+      statusElement.textContent =
+        "✅ Supabase connected successfully. Payments data loaded.";
+
+      statusElement.className =
+        "notice success";
+
+    } catch (error) {
+
+      console.error(
+        "Supabase error:",
+        error
+      );
+
+      paymentsElement.textContent =
+        "0";
+
+      statusElement.textContent =
+        "❌ Supabase error: " + error.message;
+
+      statusElement.className =
+        "notice error";
+    }
+  }
+
+
+  loadPaymentCount();
+
+</script></body>
+    </html>
