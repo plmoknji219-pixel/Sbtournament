@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - SB Tournament</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      color: #38bdf8;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title h1 {
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .title p {
+      color: #94a3b8;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+    }
+
+    .stat-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .stat h3 {
+      color: #cbd5e1;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .stat strong {
+      color: #38bdf8;
+      font-size: 26px;
+    }
+
+    .panel {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .action {
+      text-decoration: none;
+      text-align: center;
+      padding: 16px;
+      border-radius: 9px;
+      background: #0284c7;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .action:hover {
+      background: #0369a1;
+    }
+
+    .action.secondary {
+      background: #334155;
+    }
+
+    .action.secondary:hover {
+      background: #475569;
+    }
+
+    .notice {
+      padding: 15px;
+      border-radius: 9px;
+      background: #422006;
+      color: #fde68a;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 800px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111827;
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 15px;
+        margin: 20px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SB Tournament Admin</div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="registration.html">Registration</a>
+    <a href="player-dashboard.html">Dashboard</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="payment.html">Payment</a>
+    <a href="support.html">Support</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="title">
+    <h1>⚙️ Admin Panel</h1>
+    <p>Manage SB Tournament from one place.</p>
+  </section>
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-icon">👥</div>
+      <h3>Total Players</h3>
+      <strong id="playersCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🏆</div>
+      <h3>Tournaments</h3>
+      <strong id="tournamentsCount">3</strong>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">💳</div>
+      <h3>Payments</h3>
+      <strong id="paymentsCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon">🎮</div>
+      <h3>Matches</h3>
+      <strong id="matchesCount">0</strong>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>Admin Actions</h2>
+
+    <div class="actions">
+
+      <a href="registration.html" class="action">
+        👥 Registrations
+      </a>
+
+      <a href="tournament.html" class="action">
+        🏆 Tournaments
+      </a>
+
+      <a href="leaderboard.html" class="action">
+        📊 Leaderboard
+      </a>
+
+      <a href="payment.html" class="action">
+        💳 Payments
+      </a>
+
+      <a href="player-dashboard.html" class="action secondary">
+        👤 Player Dashboard
+      </a>
+
+      <a href="support.html" class="action secondary">
+        🛠️ Support
+      </a>
+
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>System Status</h2>
+
+    <div class="notice">
+      Admin panel is ready. Database management and secure admin
+      authentication can be connected in the next development stage.
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 SB Tournament. Admin Panel
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
+
+  /*
+    Current P6 uses demo statistics.
+    Supabase admin data will be connected after
+    the required database tables and RLS policies
+    are finalized.
+  */
+
+  const adminStats = {
+    players: 0,
+    tournaments: 3,
+    payments: 0,
+    matches: 0
+  };
+
+  document.getElementById("playersCount").textContent =
+    adminStats.players;
+
+  document.getElementById("tournamentsCount").textContent =
+    adminStats.tournaments;
+
+  document.getElementById("paymentsCount").textContent =
+    adminStats.payments;
+
+  document.getElementById("matchesCount").textContent =
+    adminStats.matches;
+</script>
+
+</body>
+</html>
