@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration - SB Tournament</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .menu-btn {
+      font-size: 26px;
+      cursor: pointer;
+      display: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      color: #e2e8f0;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #fff;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #38bdf8;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background: #0284c7;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0369a1;
+    }
+
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 18px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .success {
+      display: block !important;
+      background: #14532d;
+      color: #bbf7d0;
+    }
+
+    .error {
+      display: block !important;
+      background: #7f1d1d;
+      color: #fecaca;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 700px) {
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111827;
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SB Tournament</div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="registration.html">Registration</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="payment.html">Payment</a>
+    <a href="support.html">Support</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>Tournament Registration</h1>
+
+    <p class="subtitle">
+      Register your player details to join SB Tournament.
+    </p>
+
+    <form id="registrationForm">
+
+      <label for="playerName">Player Name</label>
+      <input
+        type="text"
+        id="playerName"
+        placeholder="Enter player name"
+        required
+      >
+
+      <label for="gameName">Game Name</label>
+      <input
+        type="text"
+        id="gameName"
+        placeholder="Enter game name"
+        required
+      >
+
+      <label for="gameId">Game ID</label>
+      <input
+        type="text"
+        id="gameId"
+        placeholder="Enter game ID"
+        required
+      >
+
+      <label for="phone">Phone Number</label>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="01XXXXXXXXX"
+        maxlength="11"
+        required
+      >
+
+      <label for="tournament">Select Tournament</label>
+      <select id="tournament" required>
+        <option value="">Select tournament</option>
+        <option value="Free Fire Solo">Free Fire Solo</option>
+        <option value="Free Fire Duo">Free Fire Duo</option>
+        <option value="Free Fire Squad">Free Fire Squad</option>
+      </select>
+
+      <button type="submit" id="submitBtn">
+        Register Now
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 SB Tournament. All Rights Reserved.
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
+
+  const form = document.getElementById("registrationForm");
+  const message = document.getElementById("message");
+  const submitBtn = document.getElementById("submitBtn");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const playerName = document.getElementById("playerName").value.trim();
+    const gameName = document.getElementById("gameName").value.trim();
+    const gameId = document.getElementById("gameId").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const tournament = document.getElementById("tournament").value;
+
+    if (!playerName || !gameName || !gameId || !phone || !tournament) {
+      showMessage("Please fill in all fields.", "error");
+      return;
+    }
+
+    if (!/^01[0-9]{9}$/.test(phone)) {
+      showMessage("Please enter a valid 11-digit Bangladesh phone number.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Registering...";
+
+    /*
+      P2 currently validates the registration form.
+      Supabase registration database connection will be added
+      in the next database integration step.
+    */
+
+    setTimeout(() => {
+      showMessage(
+        "Registration submitted successfully!",
+        "success"
+      );
+
+      form.reset();
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Register Now";
+    }, 800);
+  });
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+  }
+</script>
+
+</body>
+    </html>
