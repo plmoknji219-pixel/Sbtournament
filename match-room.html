@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match Room - SB Tournament</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #151c35;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #303a63;
+    }
+
+    header h1 {
+      color: #00e5ff;
+      font-size: 27px;
+    }
+
+    header p {
+      color: #aeb7d8;
+      margin-top: 6px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 650px;
+      margin: 25px auto;
+    }
+
+    .card {
+      background: #151c35;
+      border: 1px solid #303a63;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      color: #00e5ff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .match-info {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-box {
+      background: #0e152b;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .label {
+      color: #8f9bc2;
+      font-size: 13px;
+    }
+
+    .value {
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .room {
+      text-align: center;
+      padding: 20px;
+      background: #0e152b;
+      border-radius: 12px;
+    }
+
+    .room-id {
+      font-size: 24px;
+      color: #00e5ff;
+      font-weight: bold;
+      margin: 10px 0;
+      word-break: break-word;
+    }
+
+    .room-password {
+      font-size: 20px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: #24402f;
+      color: #7dffbd;
+      font-size: 13px;
+    }
+
+    .notice {
+      background: #241f0d;
+      border: 1px solid #514717;
+      color: #f6e58d;
+      padding: 14px;
+      border-radius: 10px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .loading {
+      text-align: center;
+      color: #aeb7d8;
+      padding: 30px;
+    }
+
+    .error {
+      text-align: center;
+      color: #ff9aa9;
+      padding: 20px;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      color: #00e5ff;
+      text-decoration: none;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏆 SB TOURNAMENT</h1>
+  <p>Match Room</p>
+</header>
+
+<div class="container">
+
+  <div id="loading" class="loading">
+    Loading match details...
+  </div>
+
+  <div id="content" style="display:none;">
+
+    <div class="card">
+      <h2>🎮 Match Details</h2>
+
+      <div class="match-info">
+
+        <div class="info-box">
+          <div class="label">Match Name</div>
+          <div class="value" id="matchName">-</div>
+        </div>
+
+        <div class="info-box">
+          <div class="label">Date</div>
+          <div class="value" id="matchDate">-</div>
+        </div>
+
+        <div class="info-box">
+          <div class="label">Time</div>
+          <div class="value" id="matchTime">-</div>
+        </div>
+
+        <div class="info-box">
+          <div class="label">Status</div>
+          <div class="value">
+            <span class="status" id="matchStatus">
+              -
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="card">
+
+      <h2>🔐 Room Information</h2>
+
+      <div class="room">
+
+        <div class="label">Room ID</div>
+
+        <div class="room-id" id="roomId">
+          Hidden
+        </div>
+
+        <div class="label">Room Password</div>
+
+        <div class="room-password" id="roomPassword">
+          Hidden
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="notice">
+        <b>⚠️ Important</b><br><br>
+        Room information should only be used by registered
+        players. Do not share the Room ID or Password with
+        other players.
+      </div>
+
+      <a href="tournament.html" class="back">
+        ← Back to Tournament
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // =========================================
+  // SUPABASE CONNECTION
+  // =========================================
+
+  const SUPABASE_URL =
+    "https://nbpajmpaoaipithpoocj.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_AnPiHUdAVcqPHegu4xT2qw_J186oXwB";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  // =========================================
+  // ELEMENTS
+  // =========================================
+
+  const loading =
+    document.getElementById("loading");
+
+  const content =
+    document.getElementById("content");
+
+
+  // =========================================
+  // GET MATCH ID
+  // =========================================
+
+  const params =
+    new URLSearchParams(window.location.search);
+
+  const matchId =
+    params.get("id");
+
+
+  // =========================================
+  // LOAD MATCH
+  // =========================================
+
+  async function loadMatch() {
+
+    if (!matchId) {
+
+      loading.innerHTML =
+        '<div class="error">No match ID provided.</div>';
+
+      return;
+    }
+
+
+    try {
+
+      const { data, error } =
+        await supabaseClient
+          .from("matches")
+          .select("*")
+          .eq("id", matchId)
+          .single();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      if (!data) {
+
+        loading.innerHTML =
+          '<div class="error">Match not found.</div>';
+
+        return;
+      }
+
+
+      // =====================================
+      // DISPLAY DATA
+      // =====================================
+
+      document.getElementById("matchName")
+        .textContent =
+        data.match_name ||
+        data.name ||
+        "Tournament Match";
+
+
+      const dateValue =
+        data.match_date ||
+        data.date ||
+        data.created_at;
+
+
+      if (dateValue) {
+
+        const date =
+          new Date(dateValue);
+
+        document.getElementById("matchDate")
+          .textContent =
+          date.toLocaleDateString();
+
+        document.getElementById("matchTime")
+          .textContent =
+          date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+          });
+
+      } else {
+
+        document.getElementById("matchDate")
+          .textContent = "Not set";
+
+        document.getElementById("matchTime")
+          .textContent = "Not set";
+      }
+
+
+      document.getElementById("matchStatus")
+        .textContent =
+        data.status || "Upcoming";
+
+
+      document.getElementById("roomId")
+        .textContent =
+        data.room_id ||
+        data.roomid ||
+        "Not available";
+
+
+      document.getElementById("roomPassword")
+        .textContent =
+        data.room_password ||
+        data.password ||
+        "Not available";
+
+
+      loading.style.display = "none";
+      content.style.display = "block";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      loading.innerHTML =
+        '<div class="error">' +
+        'Unable to load match details.<br>' +
+        'Please check the Supabase matches table.' +
+        '</div>';
+    }
+  }
+
+
+  // =========================================
+  // START
+  // =========================================
+
+  loadMatch();
+
+</script>
+
+</body>
+</html>
