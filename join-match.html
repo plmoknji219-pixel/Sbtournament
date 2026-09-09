@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Match - SB Tournament</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #151c35;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #303a63;
+    }
+
+    header h1 {
+      color: #00e5ff;
+      font-size: 27px;
+    }
+
+    header p {
+      color: #aeb7d8;
+      margin-top: 6px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 600px;
+      margin: 25px auto;
+    }
+
+    .card {
+      background: #151c35;
+      border: 1px solid #303a63;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00e5ff;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: bold;
+      color: #dce2ff;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #3a4775;
+      background: #0e152b;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #00e5ff;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #00e5ff;
+      color: #001018;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+    }
+
+    #message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      text-align: center;
+      display: none;
+    }
+
+    .success {
+      display: block !important;
+      background: #123b2a;
+      color: #7dffbd;
+    }
+
+    .error {
+      display: block !important;
+      background: #3d1720;
+      color: #ff9aa9;
+    }
+
+    .loading {
+      text-align: center;
+      color: #aeb7d8;
+      padding: 15px;
+    }
+
+    .info {
+      margin-top: 20px;
+      padding: 14px;
+      background: #0e152b;
+      border-radius: 10px;
+      color: #aeb7d8;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #00e5ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏆 SB TOURNAMENT</h1>
+  <p>Join Match</p>
+</header>
+
+<div class="container">
+  <div class="card">
+
+    <h2>🎮 Join Match</h2>
+
+    <div id="loading" class="loading">
+      Loading matches...
+    </div>
+
+    <form id="joinForm" style="display:none;">
+
+      <label for="match">Select Match</label>
+      <select id="match" required>
+        <option value="">Select a match</option>
+      </select>
+
+      <label for="playerName">Player Name</label>
+      <input
+        type="text"
+        id="playerName"
+        placeholder="Enter player name"
+        required
+      >
+
+      <label for="gameId">Game ID / UID</label>
+      <input
+        type="text"
+        id="gameId"
+        placeholder="Enter Game UID"
+        required
+      >
+
+      <label for="phone">Phone / WhatsApp</label>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Enter phone number"
+        required
+      >
+
+      <button type="submit" id="joinBtn">
+        JOIN MATCH
+      </button>
+
+      <div id="message"></div>
+
+    </form>
+
+    <div class="info">
+      <b>Important:</b><br>
+      • Enter the correct Game UID.<br>
+      • Do not submit the same match repeatedly.<br>
+      • Check your tournament information before joining.
+    </div>
+
+    <a href="tournament.html" class="back">
+      ← Back to Tournament
+    </a>
+
+  </div>
+</div>
+
+<script>
+
+  // =========================================
+  // SUPABASE CONNECTION
+  // =========================================
+
+  const SUPABASE_URL =
+    "https://nbpajmpaoaipithpoocj.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_AnPiHUdAVcqPHegu4xT2qw_J186oXwB";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  // =========================================
+  // ELEMENTS
+  // =========================================
+
+  const loading =
+    document.getElementById("loading");
+
+  const joinForm =
+    document.getElementById("joinForm");
+
+  const matchSelect =
+    document.getElementById("match");
+
+  const message =
+    document.getElementById("message");
+
+  const joinBtn =
+    document.getElementById("joinBtn");
+
+
+  // =========================================
+  // MESSAGE
+  // =========================================
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+  }
+
+
+  // =========================================
+  // LOAD MATCHES
+  // =========================================
+
+  async function loadMatches() {
+
+    try {
+
+      const { data, error } =
+        await supabaseClient
+          .from("matches")
+          .select("*")
+          .order("created_at", {
+            ascending: false
+          });
+
+      if (error) throw error;
+
+      loading.style.display = "none";
+      joinForm.style.display = "block";
+
+      matchSelect.innerHTML =
+        '<option value="">Select a match</option>';
+
+      if (!data || data.length === 0) {
+
+        matchSelect.innerHTML =
+          '<option value="">No matches available</option>';
+
+        joinBtn.disabled = true;
+        return;
+      }
+
+      data.forEach(match => {
+
+        const option =
+          document.createElement("option");
+
+        option.value = match.id;
+
+        const matchName =
+          match.match_name ||
+          match.name ||
+          "Match #" + match.id;
+
+        const status =
+          match.status ||
+          "Available";
+
+        option.textContent =
+          matchName + " - " + status;
+
+        matchSelect.appendChild(option);
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      loading.style.display = "none";
+      joinForm.style.display = "block";
+
+      showMessage(
+        "Unable to load matches. Check your Supabase table.",
+        "error"
+      );
+    }
+  }
+
+
+  // =========================================
+  // JOIN MATCH
+  // =========================================
+
+  joinForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+      message.className = "";
+      message.textContent = "";
+
+      const matchId =
+        matchSelect.value.trim();
+
+      const playerName =
+        document
+          .getElementById("playerName")
+          .value.trim();
+
+      const gameId =
+        document
+          .getElementById("gameId")
+          .value.trim();
+
+      const phone =
+        document
+          .getElementById("phone")
+          .value.trim();
+
+
+      if (
+        !matchId ||
+        !playerName ||
+        !gameId ||
+        !phone
+      ) {
+
+        showMessage(
+          "Please fill in all fields.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      joinBtn.disabled = true;
+      joinBtn.textContent = "Joining...";
+
+
+      try {
+
+        const { error } =
+          await supabaseClient
+            .from("match_players")
+            .insert([
+              {
+                match_id: matchId,
+                player_name: playerName,
+                game_id: gameId,
+                phone: phone
+              }
+            ]);
+
+
+        if (error) throw error;
+
+
+        showMessage(
+          "✅ Successfully joined the match!",
+          "success"
+        );
+
+        joinForm.reset();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        if (error.code === "23505") {
+
+          showMessage(
+            "You have already joined this match.",
+            "error"
+          );
+
+        } else {
+
+          showMessage(
+            "Failed to join match. Please try again.",
+            "error"
+          );
+        }
+      }
+
+
+      joinBtn.disabled = false;
+      joinBtn.textContent = "JOIN MATCH";
+
+    }
+  );
+
+
+  // =========================================
+  // START
+  // =========================================
+
+  loadMatches();
+
+</script>
+
+</body>
+</html>
