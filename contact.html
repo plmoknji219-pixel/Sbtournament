@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SB Tournament - Contact</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 22px 15px;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 25px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #111827;
+      margin-bottom: 12px;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 130px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .links a {
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>SB Tournament</h1>
+  <p>Contact Us</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>📞 Contact Support</h2>
+
+    <p>
+      Have a question or problem? Send us a message using the form below.
+    </p>
+
+    <form id="contactForm">
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Your Name"
+        required
+      >
+
+      <input
+        type="text"
+        id="gameId"
+        placeholder="Game UID"
+        required
+      >
+
+      <input
+        type="text"
+        id="subject"
+        placeholder="Subject"
+        required
+      >
+
+      <textarea
+        id="message"
+        placeholder="Write your message..."
+        required
+      ></textarea>
+
+      <button type="submit">
+        Send Message
+      </button>
+
+    </form>
+
+    <div id="status"></div>
+  </div>
+
+  <div class="card">
+    <h2>🆘 Support</h2>
+
+    <p>
+      For tournament-related problems, you can also visit the
+      Support page.
+    </p>
+
+    <div class="links">
+      <a href="support.html">Open Support</a>
+      <a href="index.html">🏠 Home</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const form = document.getElementById("contactForm");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const gameId = document.getElementById("gameId").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !gameId || !subject || !message) {
+      status.textContent = "Please fill in all fields.";
+      return;
+    }
+
+    /*
+      P15 basic version.
+      Supabase connection can be added after
+      the contact_messages table is created.
+    */
+
+    status.textContent =
+      "Your message is ready. Contact system will be connected to Supabase later.";
+
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
