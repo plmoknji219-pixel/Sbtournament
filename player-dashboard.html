@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Dashboard - SB Tournament</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #111827;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      color: #38bdf8;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #94a3b8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: #1e293b;
+      padding: 22px;
+      border-radius: 14px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+
+    .stat-card .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card h3 {
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card strong {
+      font-size: 25px;
+      color: #38bdf8;
+    }
+
+    .panel {
+      background: #1e293b;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px solid #334155;
+    }
+
+    .panel h2 {
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 13px 0;
+      border-bottom: 1px solid #334155;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #94a3b8;
+    }
+
+    .value {
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #854d0e;
+      color: #fef08a;
+      font-size: 13px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      border-radius: 8px;
+      background: #0284c7;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #0369a1;
+    }
+
+    .btn.secondary {
+      background: #334155;
+    }
+
+    .btn.secondary:hover {
+      background: #475569;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 750px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #111827;
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+
+      .info-row {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">SB Tournament</div>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="registration.html">Registration</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="player-dashboard.html">Dashboard</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="payment.html">Payment</a>
+    <a href="support.html">Support</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="welcome">
+    <h1>Player Dashboard</h1>
+    <p>Welcome to your SB Tournament dashboard.</p>
+  </section>
+
+  <section class="cards">
+
+    <div class="stat-card">
+      <div class="icon">🏆</div>
+      <h3>Tournaments</h3>
+      <strong id="tournamentCount">0</strong>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon">🥇</div>
+      <h3>Wins</h3>
+      <strong id="winCount">0</strong>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon">⭐</div>
+      <h3>Points</h3>
+      <strong id="pointCount">0</strong>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>Player Information</h2>
+
+    <div class="info-row">
+      <span class="label">Player Name</span>
+      <span class="value" id="playerName">Not registered</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Game Name</span>
+      <span class="value" id="gameName">-</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Game ID</span>
+      <span class="value" id="gameId">-</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Phone</span>
+      <span class="value" id="phone">-</span>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>Latest Tournament</h2>
+
+    <div class="info-row">
+      <span class="label">Tournament</span>
+      <span class="value" id="tournamentName">No tournament</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">Registration</span>
+      <span class="value">
+        <span class="status" id="registrationStatus">Pending</span>
+      </span>
+    </div>
+
+  </section>
+
+  <section class="panel">
+
+    <h2>Quick Actions</h2>
+
+    <div class="buttons">
+      <a href="registration.html" class="btn">
+        Register Tournament
+      </a>
+
+      <a href="tournament.html" class="btn">
+        View Tournaments
+      </a>
+
+      <a href="payment.html" class="btn">
+        Make Payment
+      </a>
+
+      <a href="leaderboard.html" class="btn secondary">
+        View Leaderboard
+      </a>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 SB Tournament. All Rights Reserved.
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
+
+  /*
+    Demo dashboard data.
+    Supabase connection can be added when the
+    registration/player database is created.
+  */
+
+  const playerData = {
+    name: "SB Player",
+    gameName: "Free Fire",
+    gameId: "Not Set",
+    phone: "Not Set",
+    tournament: "No tournament",
+    registrationStatus: "Pending",
+    tournaments: 0,
+    wins: 0,
+    points: 0
+  };
+
+  document.getElementById("playerName").textContent =
+    playerData.name;
+
+  document.getElementById("gameName").textContent =
+    playerData.gameName;
+
+  document.getElementById("gameId").textContent =
+    playerData.gameId;
+
+  document.getElementById("phone").textContent =
+    playerData.phone;
+
+  document.getElementById("tournamentName").textContent =
+    playerData.tournament;
+
+  document.getElementById("registrationStatus").textContent =
+    playerData.registrationStatus;
+
+  document.getElementById("tournamentCount").textContent =
+    playerData.tournaments;
+
+  document.getElementById("winCount").textContent =
+    playerData.wins;
+
+  document.getElementById("pointCount").textContent =
+    playerData.points;
+</script>
+
+</body>
+  </html>
