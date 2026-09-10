@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - SB Tournament</title>
+
+  <title>SB Tournament - Admin</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -17,118 +18,52 @@
     body {
       font-family: Arial, sans-serif;
       background: #080d1c;
-      color: #fff;
+      color: white;
       min-height: 100vh;
     }
 
     header {
       background: #111a35;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #26345f;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      color: #00e5ff;
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    .menu-btn {
-      border: none;
-      background: #00e5ff;
-      color: #001018;
-      padding: 9px 13px;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    nav {
-      display: none;
-      position: absolute;
-      top: 65px;
-      right: 15px;
-      width: 220px;
-      background: #111a35;
-      border: 1px solid #26345f;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    nav.show {
-      display: block;
-    }
-
-    nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 13px 15px;
+      padding: 18px;
+      text-align: center;
       border-bottom: 1px solid #26345f;
     }
 
-    nav a:hover {
+    header h1 {
       color: #00e5ff;
-      background: #192650;
+      font-size: 25px;
     }
 
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 25px 16px 50px;
+    header p {
+      color: #aab4d4;
+      margin-top: 6px;
+      font-size: 13px;
     }
 
-    .hero {
-      background: linear-gradient(135deg, #111a35, #17265a);
-      border: 1px solid #26345f;
-      border-radius: 15px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      color: #00e5ff;
-      margin-bottom: 8px;
-    }
-
-    .hero p {
-      color: #aebbdc;
+    .container {
+      width: 94%;
+      max-width: 1100px;
+      margin: 25px auto;
     }
 
     .status {
-      margin-top: 15px;
-      padding: 11px;
-      border-radius: 8px;
-      background: #0c1429;
-      color: #aebbdc;
-      font-size: 14px;
-    }
-
-    .error {
-      color: #ff8b8b;
-    }
-
-    .actions {
+      padding: 13px;
+      border-radius: 10px;
+      background: #111a35;
       margin-bottom: 20px;
+      color: #aab4d4;
+      text-align: center;
     }
 
-    .refresh {
-      border: none;
-      background: #00e5ff;
-      color: #001018;
-      padding: 11px 18px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
+    .status.success {
+      color: #00ff9d;
     }
 
-    .stats {
+    .status.error {
+      color: #ff6577;
+    }
+
+    .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 15px;
@@ -138,19 +73,15 @@
     .card {
       background: #111a35;
       border: 1px solid #26345f;
-      border-radius: 13px;
-      padding: 20px;
-    }
-
-    .icon {
-      font-size: 25px;
-      margin-bottom: 10px;
+      border-radius: 15px;
+      padding: 22px;
+      text-align: center;
     }
 
     .card h3 {
-      color: #aebbdc;
+      color: #aab4d4;
       font-size: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .number {
@@ -162,49 +93,103 @@
     .section {
       background: #111a35;
       border: 1px solid #26345f;
-      border-radius: 13px;
+      border-radius: 15px;
       padding: 20px;
+      margin-bottom: 20px;
     }
 
     .section h2 {
       color: #00e5ff;
       margin-bottom: 15px;
+      font-size: 20px;
     }
 
-    .links {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .links a {
-      background: #0c1429;
-      border: 1px solid #26345f;
+    button {
+      border: none;
       border-radius: 9px;
-      padding: 14px;
-      color: white;
-      text-decoration: none;
+      padding: 11px 16px;
+      background: #00e5ff;
+      color: #06101b;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 4px;
     }
 
-    .links a:hover {
-      border-color: #00e5ff;
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .danger {
+      background: #ff4d67;
+      color: white;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #26345f;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
       color: #00e5ff;
     }
 
-    footer {
-      text-align: center;
-      color: #7180a5;
-      padding: 20px;
-      font-size: 13px;
+    td {
+      color: #dce2f5;
     }
 
-    @media (max-width: 650px) {
-      .stats {
+    .empty {
+      text-align: center;
+      color: #8893b5;
+      padding: 20px;
+    }
+
+    .error-box {
+      background: #301522;
+      color: #ff8c9c;
+      border: 1px solid #713040;
+      padding: 12px;
+      border-radius: 9px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      display: inline-block;
+      color: #00e5ff;
+      text-decoration: none;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .cards {
         grid-template-columns: 1fr;
       }
 
-      .links {
-        grid-template-columns: 1fr;
+      header h1 {
+        font-size: 21px;
+      }
+
+      .container {
+        width: 92%;
       }
     }
   </style>
@@ -213,164 +198,139 @@
 <body>
 
 <header>
-
-  <div class="logo">
-    SB TOURNAMENT
-  </div>
-
-  <button class="menu-btn" onclick="toggleMenu()">
-    ☰
-  </button>
-
-  <nav id="menu">
-    <a href="index.html">🏠 Home</a>
-    <a href="tournament.html">🏆 Tournaments</a>
-    <a href="player-dashboard.html">👤 Player Dashboard</a>
-    <a href="leaderboard.html">🥇 Leaderboard</a>
-    <a href="payment.html">💳 Payments</a>
-    <a href="match-management.html">🎮 Match Management</a>
-    <a href="match-history.html">📜 Match History</a>
-    <a href="about.html">ℹ️ About</a>
-  </nav>
-
+  <h1>SB Tournament Admin</h1>
+  <p>Admin Dashboard</p>
 </header>
 
+<div class="container">
 
-<main>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="registration.html">Registration</a>
+    <a href="leaderboard.html">Leaderboard</a>
+  </nav>
 
-  <div class="hero">
+  <div id="status" class="status">
+    Connecting to Supabase...
+  </div>
 
-    <h1>
-      Admin Dashboard
-    </h1>
+  <!-- STAT CARDS -->
+  <div class="cards">
 
-    <p>
-      SB Tournament payment management
-    </p>
+    <div class="card">
+      <h3>Total Players</h3>
+      <div id="playerCount" class="number">0</div>
+    </div>
 
-    <div class="status" id="status">
-      Connecting to Supabase...
+    <div class="card">
+      <h3>Total Tournaments</h3>
+      <div id="tournamentCount" class="number">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Total Payments</h3>
+      <div id="paymentCount" class="number">0</div>
     </div>
 
   </div>
 
-
-  <div class="actions">
-
-    <button class="refresh" onclick="loadPayments()">
-      🔄 Refresh Payments
-    </button>
-
-  </div>
-
-
-  <div class="stats">
-
-    <div class="card">
-
-      <div class="icon">
-        💳
-      </div>
-
-      <h3>
-        Total Payments
-      </h3>
-
-      <div class="number" id="paymentsCount">
-        --
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="icon">
-        👥
-      </div>
-
-      <h3>
-        Players
-      </h3>
-
-      <div class="number">
-        N/A
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="icon">
-        🏆
-      </div>
-
-      <h3>
-        Tournaments
-      </h3>
-
-      <div class="number">
-        N/A
-      </div>
-
-    </div>
-
-  </div>
-
-
+  <!-- ACTIONS -->
   <div class="section">
 
-    <h2>
-      ⚙️ Admin Management
-    </h2>
+    <h2>Admin Controls</h2>
 
-    <div class="links">
+    <button onclick="loadDashboard()">
+      🔄 Refresh Dashboard
+    </button>
 
-      <a href="payment.html">
-        💳 Payment Management
-      </a>
+    <button onclick="loadPayments()">
+      💳 Refresh Payments
+    </button>
 
-      <a href="tournament.html">
-        🏆 Tournament Page
-      </a>
+    <button onclick="loadTournaments()">
+      🏆 Refresh Tournaments
+    </button>
 
-      <a href="player-dashboard.html">
-        👤 Player Dashboard
-      </a>
+    <div id="errorBox" class="error-box"></div>
 
-      <a href="match-management.html">
-        🎮 Match Management
-      </a>
+  </div>
 
-      <a href="match-history.html">
-        📜 Match History
-      </a>
+  <!-- PAYMENTS -->
+  <div class="section">
 
-      <a href="leaderboard.html">
-        🥇 Leaderboard
-      </a>
+    <h2>Recent Payments</h2>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Player</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody id="paymentsTable">
+          <tr>
+            <td colspan="5" class="empty">
+              Loading payments...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
 
     </div>
 
   </div>
 
-</main>
+  <!-- TOURNAMENTS -->
+  <div class="section">
 
+    <h2>Tournaments</h2>
 
-<footer>
-  © 2026 SB Tournament
-</footer>
+    <div class="table-wrap">
 
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="tournamentsTable">
+          <tr>
+            <td colspan="4" class="empty">
+              Loading tournaments...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
 
   /* ==============================
-     SUPABASE
-     ============================== */
+     SUPABASE CONFIG
+  ============================== */
 
   const SUPABASE_URL =
-    "https://nbpajmpaoaipithpoocj.supabase.co";
+    "https://ofcpuiubovcjxucqynyw.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
@@ -383,43 +343,133 @@
 
 
   /* ==============================
-     MENU
-     ============================== */
+     HELPERS
+  ============================== */
 
-  function toggleMenu() {
+  function setStatus(message, type = "") {
 
-    document
-      .getElementById("menu")
-      .classList
-      .toggle("show");
+    const box = document.getElementById("status");
 
+    box.textContent = message;
+
+    box.className = "status";
+
+    if (type) {
+      box.classList.add(type);
+    }
+  }
+
+
+  function showError(message) {
+
+    const box = document.getElementById("errorBox");
+
+    box.style.display = "block";
+
+    box.textContent = message;
+  }
+
+
+  function hideError() {
+
+    const box = document.getElementById("errorBox");
+
+    box.style.display = "none";
+
+    box.textContent = "";
+  }
+
+
+  function safe(value) {
+
+    if (value === null || value === undefined) {
+      return "-";
+    }
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
 
   /* ==============================
-     LOAD PAYMENTS
-     ============================== */
+     COUNT PLAYERS
+  ============================== */
 
-  async function loadPayments() {
-
-    const status =
-      document.getElementById("status");
-
-    const count =
-      document.getElementById("paymentsCount");
-
-
-    status.className = "status";
-
-    status.textContent =
-      "Loading payments from Supabase...";
-
-    count.textContent = "...";
-
+  async function loadPlayers() {
 
     try {
 
-      const { count: total, error } =
+      const { count, error } =
+        await supabaseClient
+          .from("players")
+          .select("*", {
+            count: "exact",
+            head: true
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      document.getElementById("playerCount")
+        .textContent = count ?? 0;
+
+    } catch (error) {
+
+      console.error("Players:", error);
+
+      document.getElementById("playerCount")
+        .textContent = "N/A";
+    }
+  }
+
+
+  /* ==============================
+     COUNT TOURNAMENTS
+  ============================== */
+
+  async function loadTournamentCount() {
+
+    try {
+
+      const { count, error } =
+        await supabaseClient
+          .from("tournaments")
+          .select("*", {
+            count: "exact",
+            head: true
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      document.getElementById("tournamentCount")
+        .textContent = count ?? 0;
+
+    } catch (error) {
+
+      console.error("Tournaments:", error);
+
+      document.getElementById("tournamentCount")
+        .textContent = "N/A";
+    }
+  }
+
+
+  /* ==============================
+     COUNT PAYMENTS
+  ============================== */
+
+  async function loadPaymentCount() {
+
+    try {
+
+      const { count, error } =
         await supabaseClient
           .from("payments")
           .select("*", {
@@ -427,59 +477,259 @@
             head: true
           });
 
+      if (error) {
+        throw error;
+      }
+
+      document.getElementById("paymentCount")
+        .textContent = count ?? 0;
+
+    } catch (error) {
+
+      console.error("Payments:", error);
+
+      document.getElementById("paymentCount")
+        .textContent = "N/A";
+    }
+  }
+
+
+  /* ==============================
+     LOAD PAYMENTS
+  ============================== */
+
+  async function loadPayments() {
+
+    const table =
+      document.getElementById("paymentsTable");
+
+    table.innerHTML = `
+      <tr>
+        <td colspan="5" class="empty">
+          Loading payments...
+        </td>
+      </tr>
+    `;
+
+    try {
+
+      const { data, error } =
+        await supabaseClient
+          .from("payments")
+          .select("*")
+          .order("created_at", {
+            ascending: false
+          })
+          .limit(50);
 
       if (error) {
         throw error;
       }
 
+      if (!data || data.length === 0) {
 
-      count.textContent =
-        total ?? 0;
+        table.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">
+              No payments found.
+            </td>
+          </tr>
+        `;
 
+        return;
+      }
 
-      status.textContent =
-        "✅ Supabase connected — Payments loaded successfully.";
+      table.innerHTML = data.map(payment => {
 
+        const id =
+          payment.id ?? "-";
+
+        const player =
+          payment.player_name ??
+          payment.name ??
+          payment.username ??
+          payment.user_name ??
+          "-";
+
+        const amount =
+          payment.amount ??
+          payment.price ??
+          "0";
+
+        const status =
+          payment.status ??
+          "Pending";
+
+        const date =
+          payment.created_at
+            ? new Date(payment.created_at)
+                .toLocaleString()
+            : "-";
+
+        return `
+          <tr>
+            <td>${safe(id)}</td>
+            <td>${safe(player)}</td>
+            <td>${safe(amount)}</td>
+            <td>${safe(status)}</td>
+            <td>${safe(date)}</td>
+          </tr>
+        `;
+
+      }).join("");
 
     } catch (error) {
 
-      console.error(
-        "Payment loading error:",
-        error
+      console.error("Payment loading error:", error);
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="5" class="empty">
+            Payment table could not be loaded.
+          </td>
+        </tr>
+      `;
+
+      showError(
+        "Payments error: " +
+        (error.message || "Unknown error")
       );
-
-
-      count.textContent =
-        "0";
-
-
-      status.className =
-        "status error";
-
-
-      status.textContent =
-        "❌ Payments error: " +
-        error.message;
-
     }
+  }
 
+
+  /* ==============================
+     LOAD TOURNAMENTS
+  ============================== */
+
+  async function loadTournaments() {
+
+    const table =
+      document.getElementById("tournamentsTable");
+
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="empty">
+          Loading tournaments...
+        </td>
+      </tr>
+    `;
+
+    try {
+
+      const { data, error } =
+        await supabaseClient
+          .from("tournaments")
+          .select("*")
+          .order("id", {
+            ascending: false
+          })
+          .limit(50);
+
+      if (error) {
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+
+        table.innerHTML = `
+          <tr>
+            <td colspan="4" class="empty">
+              No tournaments found.
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+      table.innerHTML = data.map(tournament => {
+
+        const id =
+          tournament.id ?? "-";
+
+        const name =
+          tournament.name ??
+          tournament.title ??
+          tournament.tournament_name ??
+          "-";
+
+        const date =
+          tournament.date ??
+          tournament.tournament_date ??
+          tournament.start_date ??
+          "-";
+
+        const status =
+          tournament.status ??
+          "Upcoming";
+
+        return `
+          <tr>
+            <td>${safe(id)}</td>
+            <td>${safe(name)}</td>
+            <td>${safe(date)}</td>
+            <td>${safe(status)}</td>
+          </tr>
+        `;
+
+      }).join("");
+
+    } catch (error) {
+
+      console.error("Tournament loading error:", error);
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="4" class="empty">
+            Tournament table could not be loaded.
+          </td>
+        </tr>
+      `;
+
+      showError(
+        "Tournaments error: " +
+        (error.message || "Unknown error")
+      );
+    }
+  }
+
+
+  /* ==============================
+     FULL DASHBOARD
+  ============================== */
+
+  async function loadDashboard() {
+
+    hideError();
+
+    setStatus(
+      "Connecting to Supabase...",
+      ""
+    );
+
+    await Promise.all([
+      loadPlayers(),
+      loadTournamentCount(),
+      loadPaymentCount(),
+      loadPayments(),
+      loadTournaments()
+    ]);
+
+    setStatus(
+      "Supabase connected. Dashboard updated.",
+      "success"
+    );
   }
 
 
   /* ==============================
      START
-     ============================== */
+  ============================== */
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-      loadPayments();
-
-    }
-  );
+  loadDashboard();
 
 </script>
 
 </body>
-      </html>
+  </html>
