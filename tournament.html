@@ -1,692 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tournaments - SB Tournament</title>
+  <title>SB Tournament</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    background:#0f172a;
-    color:#fff;
-    min-height:100vh;
-}
-
-header{
-    background:#111827;
-    padding:16px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-.logo{
-    font-size:22px;
-    font-weight:bold;
-    color:#38bdf8;
-}
-
-.menu-btn{
-    display:none;
-    font-size:26px;
-    cursor:pointer;
-}
-
-nav{
-    display:flex;
-    gap:18px;
-}
-
-nav a{
-    color:#fff;
-    text-decoration:none;
-    font-size:15px;
-}
-
-nav a:hover{
-    color:#38bdf8;
-}
-
-.container{
-    max-width:1100px;
-    margin:40px auto;
-    padding:20px;
-}
-
-.page-title{
-    text-align:center;
-    margin-bottom:10px;
-    color:#38bdf8;
-    font-size:32px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#cbd5e1;
-    margin-bottom:30px;
-}
-
-.tournament-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
-}
-
-.tournament-card{
-    background:#1e293b;
-    border-radius:16px;
-    padding:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-    border:1px solid #334155;
-    transition:.2s;
-}
-
-.tournament-card:hover{
-    transform:translateY(-4px);
-    border-color:#38bdf8;
-}
-
-.icon{
-    font-size:45px;
-    text-align:center;
-    margin-bottom:15px;
-}
-
-.tournament-card h2{
-    text-align:center;
-    color:#f8fafc;
-    margin-bottom:18px;
-}
-
-.info{
-    display:flex;
-    justify-content:space-between;
-    padding:9px 0;
-    border-bottom:1px solid #334155;
-    color:#cbd5e1;
-}
-
-.info strong{
-    color:#fff;
-}
-
-.status{
-    text-align:center;
-    margin:18px 0;
-    padding:8px;
-    border-radius:7px;
-    background:#166534;
-    color:#bbf7d0;
-    font-weight:bold;
-}
-
-.status.closed{
-    background:#7f1d1d;
-    color:#fecaca;
-}
-
-.join-btn{
-    display:block;
-    width:100%;
-    text-align:center;
-    text-decoration:none;
-    padding:13px;
-    background:#0284c7;
-    color:#fff;
-    border-radius:8px;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
-}
-
-.join-btn:hover{
-    background:#0369a1;
-}
-
-.join-btn.disabled{
-    background:#475569;
-    cursor:not-allowed;
-}
-
-.loading{
-    text-align:center;
-    padding:50px 20px;
-    color:#cbd5e1;
-    font-size:18px;
-}
-
-.error-box{
-    background:#450a0a;
-    border:1px solid #ef4444;
-    color:#fecaca;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-}
-
-.retry-btn{
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    background:#ef4444;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.empty-box{
-    text-align:center;
-    padding:50px 20px;
-    background:#1e293b;
-    border-radius:12px;
-    color:#cbd5e1;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    margin-top:30px;
-    color:#94a3b8;
-}
-
-@media(max-width:850px){
-    .tournament-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:650px){
-
-    .menu-btn{
-        display:block;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    nav{
-        display:none;
-        position:absolute;
-        top:60px;
-        left:0;
-        width:100%;
-        background:#111827;
-        flex-direction:column;
-        padding:15px 20px;
+    body {
+      background: #080d1c;
+      color: #fff;
+      min-height: 100vh;
     }
 
-    nav.active{
-        display:flex;
+    header {
+      background: #111a35;
+      padding: 18px 15px;
+      text-align: center;
+      border-bottom: 2px solid #00e5ff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .tournament-grid{
-        grid-template-columns:1fr;
+    header h1 {
+      color: #00e5ff;
+      font-size: 25px;
     }
 
-    .container{
-        margin:20px auto;
-        padding:15px;
+    .container {
+      width: 94%;
+      max-width: 700px;
+      margin: 20px auto;
     }
 
-    .page-title{
-        font-size:27px;
+    .status {
+      text-align: center;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background: #111a35;
+      color: #aaa;
     }
-}
-</style>
+
+    .error {
+      color: #ff6b6b;
+      border: 1px solid #ff4444;
+    }
+
+    .empty {
+      color: #ffd166;
+    }
+
+    .tournament-card {
+      background: #111a35;
+      border: 1px solid #26345f;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.25);
+    }
+
+    .tournament-card h2 {
+      color: #00e5ff;
+      margin-bottom: 12px;
+      font-size: 21px;
+    }
+
+    .info {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .info div {
+      color: #ddd;
+      font-size: 14px;
+    }
+
+    .label {
+      color: #00e5ff;
+      font-weight: bold;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #173d2d;
+      color: #54ff9a;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .join-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 9px;
+      background: #00e5ff;
+      color: #061018;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .join-btn:active {
+      transform: scale(.98);
+    }
+
+    .refresh-btn {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #00e5ff;
+      border-radius: 9px;
+      background: transparent;
+      color: #00e5ff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 25px 10px;
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
-    <div class="logo">SB Tournament</div>
-
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
-    <nav id="navMenu">
-        <a href="index.html">Home</a>
-        <a href="registration.html">Registration</a>
-        <a href="tournament.html">Tournaments</a>
-        <a href="payment.html">Payment</a>
-        <a href="support.html">Support</a>
-    </nav>
-
+  <h1>SB TOURNAMENT</h1>
 </header>
 
+<div class="container">
 
-<main class="container">
+  <button class="refresh-btn" onclick="loadTournaments()">
+    🔄 Refresh Tournaments
+  </button>
 
-    <h1 class="page-title">Available Tournaments</h1>
+  <div id="status" class="status">
+    Loading tournaments...
+  </div>
 
-    <p class="subtitle">
-        Choose your tournament and register now.
-    </p>
+  <div id="tournamentList"></div>
 
-    <div id="tournamentGrid" class="tournament-grid">
-
-        <div class="loading">
-            Loading tournaments...
-        </div>
-
-    </div>
-
-</main>
-
+</div>
 
 <footer>
-    © 2026 SB Tournament. All rights reserved.
+  © 2026 SB Tournament
 </footer>
 
-
 <script>
+  // ==============================
+  // SUPABASE CONFIGURATION
+  // ==============================
 
-/* ================================
-   SUPABASE CONFIG
-================================ */
+  const SUPABASE_URL =
+    "https://ofcpuiubovcjxucqynyw.supabase.co";
 
-const SUPABASE_URL =
-"https://ofcpuiubovcjxucqynyw.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
-
-const TOURNAMENTS_TABLE = "tournaments";
+  const SUPABASE_KEY =
+    "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
 
 
-/* ================================
-   MOBILE MENU
-================================ */
+  // ==============================
+  // LOAD TOURNAMENTS
+  // ==============================
 
-function toggleMenu(){
+  async function loadTournaments() {
 
-    const nav = document.getElementById("navMenu");
+    const status = document.getElementById("status");
+    const list = document.getElementById("tournamentList");
 
-    nav.classList.toggle("active");
-}
+    status.className = "status";
+    status.textContent = "Loading tournaments...";
+    list.innerHTML = "";
 
+    try {
 
-/* ================================
-   SAFE TEXT
-================================ */
-
-function escapeHTML(value){
-
-    if(value === null || value === undefined){
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-/* ================================
-   FIND VALUE FROM DIFFERENT
-   POSSIBLE COLUMN NAMES
-================================ */
-
-function getValue(row, names, fallback=""){
-
-    for(const name of names){
-
-        if(
-            row[name] !== undefined &&
-            row[name] !== null &&
-            row[name] !== ""
-        ){
-            return row[name];
+      const response = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/tournaments?select=*&order=id.desc",
+        {
+          method: "GET",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json"
+          }
         }
-    }
+      );
 
-    return fallback;
-}
+      if (!response.ok) {
 
+        let errorMessage = "Unable to load tournaments.";
 
-/* ================================
-   LOAD TOURNAMENTS
-================================ */
+        try {
+          const errorData = await response.json();
 
-async function loadTournaments(){
+          if (errorData.message) {
+            errorMessage = errorData.message;
+          } else if (errorData.hint) {
+            errorMessage = errorData.hint;
+          }
+        } catch (e) {}
 
-    const grid =
-        document.getElementById("tournamentGrid");
-
-    grid.innerHTML = `
-        <div class="loading">
-            Loading tournaments...
-        </div>
-    `;
-
-    try{
-
-        const endpoint =
-            `${SUPABASE_URL}/rest/v1/${TOURNAMENTS_TABLE}?select=*`;
-
-        const response = await fetch(endpoint,{
-
-            method:"GET",
-
-            headers:{
-                "apikey":SUPABASE_KEY,
-                "Authorization":`Bearer ${SUPABASE_KEY}`,
-                "Content-Type":"application/json"
-            }
-
-        });
-
-
-        if(!response.ok){
-
-            let message =
-                `Supabase error (${response.status})`;
-
-            try{
-
-                const errorData =
-                    await response.json();
-
-                if(errorData.message){
-                    message = errorData.message;
-                }
-
-                if(errorData.hint){
-                    message += ` - ${errorData.hint}`;
-                }
-
-            }catch(e){}
-
-            throw new Error(message);
-        }
-
-
-        const tournaments =
-            await response.json();
-
-
-        if(!Array.isArray(tournaments)){
-
-            throw new Error(
-                "Invalid tournament data received."
-            );
-        }
-
-
-        if(tournaments.length === 0){
-
-            grid.innerHTML = `
-                <div class="empty-box">
-                    <h2>No tournaments available</h2>
-                    <p style="margin-top:10px;">
-                        Please check again later.
-                    </p>
-                </div>
-            `;
-
-            return;
-        }
-
-
-        grid.innerHTML = "";
-
-
-        tournaments.forEach((tournament,index)=>{
-
-            const card =
-                createTournamentCard(
-                    tournament,
-                    index
-                );
-
-            grid.insertAdjacentHTML(
-                "beforeend",
-                card
-            );
-
-        });
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Tournament loading error:",
-            error
+        throw new Error(
+          errorMessage + " (HTTP " + response.status + ")"
         );
+      }
 
-        grid.innerHTML = `
+      const tournaments = await response.json();
 
-            <div class="error-box">
+      if (!Array.isArray(tournaments)) {
+        throw new Error("Invalid tournament data received.");
+      }
 
-                <h2>
-                    Failed to load tournaments
-                </h2>
+      if (tournaments.length === 0) {
 
-                <p style="margin-top:10px;">
-                    ${escapeHTML(error.message)}
-                </p>
+        status.className = "status empty";
+        status.textContent = "No tournaments available right now.";
 
-                <button
-                    class="retry-btn"
-                    onclick="loadTournaments()"
-                >
-                    Retry
-                </button>
+        return;
+      }
 
+      status.style.display = "none";
+
+      tournaments.forEach(function(tournament) {
+
+        const card = document.createElement("div");
+        card.className = "tournament-card";
+
+        const title =
+          tournament.title ||
+          tournament.name ||
+          "SB Tournament";
+
+        const game =
+          tournament.game ||
+          "Free Fire";
+
+        const entry =
+          tournament.entry_fee ??
+          tournament.entry ??
+          "0";
+
+        const prize =
+          tournament.prize ??
+          tournament.prize_pool ??
+          "Not specified";
+
+        const date =
+          tournament.date ||
+          "Not specified";
+
+        const time =
+          tournament.time ||
+          "Not specified";
+
+        const roomId =
+          tournament.room_id ||
+          "Not available";
+
+        const roomPassword =
+          tournament.room_password ||
+          "Not available";
+
+        const tournamentStatus =
+          tournament.status ||
+          "Open";
+
+        card.innerHTML = `
+          <h2>${escapeHTML(title)}</h2>
+
+          <span class="status-badge">
+            ${escapeHTML(tournamentStatus)}
+          </span>
+
+          <div class="info">
+
+            <div>
+              <span class="label">🎮 Game:</span>
+              ${escapeHTML(game)}
             </div>
 
-        `;
-    }
-}
+            <div>
+              <span class="label">💰 Entry Fee:</span>
+              ৳${escapeHTML(String(entry))}
+            </div>
 
+            <div>
+              <span class="label">🏆 Prize:</span>
+              ৳${escapeHTML(String(prize))}
+            </div>
 
-/* ================================
-   CREATE TOURNAMENT CARD
-================================ */
+            <div>
+              <span class="label">📅 Date:</span>
+              ${escapeHTML(String(date))}
+            </div>
 
-function createTournamentCard(row,index){
+            <div>
+              <span class="label">⏰ Time:</span>
+              ${escapeHTML(String(time))}
+            </div>
 
-    const id =
-        getValue(
-            row,
-            ["id","tournament_id"],
-            index + 1
-        );
+            <div>
+              <span class="label">🔐 Room ID:</span>
+              ${escapeHTML(String(roomId))}
+            </div>
 
-    const title =
-        getValue(
-            row,
-            [
-                "title",
-                "name",
-                "tournament_name"
-            ],
-            "Free Fire Tournament"
-        );
+            <div>
+              <span class="label">🔑 Password:</span>
+              ${escapeHTML(String(roomPassword))}
+            </div>
 
-    const entryFee =
-        getValue(
-            row,
-            [
-                "entry_fee",
-                "entryFee",
-                "fee"
-            ],
-            "0"
-        );
+          </div>
 
-    const prizePool =
-        getValue(
-            row,
-            [
-                "prize_pool",
-                "prizePool",
-                "prize"
-            ],
-            "0"
-        );
-
-    const players =
-        getValue(
-            row,
-            [
-                "players",
-                "max_players",
-                "total_players",
-                "slots"
-            ],
-            "0"
-        );
-
-    const mode =
-        getValue(
-            row,
-            [
-                "mode",
-                "game_mode",
-                "type"
-            ],
-            "Solo"
-        );
-
-    const status =
-        getValue(
-            row,
-            [
-                "status",
-                "tournament_status"
-            ],
-            "Registration Open"
-        );
-
-
-    const icon =
-        getValue(
-            row,
-            [
-                "icon",
-                "emoji"
-            ],
-            "🎮"
-        );
-
-
-    const statusText =
-        String(status);
-
-
-    const closed =
-        [
-            "closed",
-            "full",
-            "completed",
-            "cancelled",
-            "canceled"
-        ].includes(
-            statusText.toLowerCase()
-        );
-
-
-    let joinButton = "";
-
-    if(closed){
-
-        joinButton = `
-            <button
-                class="join-btn disabled"
-                disabled
-            >
-                Registration Closed
-            </button>
+          <button
+            class="join-btn"
+            onclick="joinTournament('${escapeJS(String(tournament.id || ""))}')"
+          >
+            JOIN TOURNAMENT
+          </button>
         `;
 
-    }else{
+        list.appendChild(card);
+      });
 
-        joinButton = `
-            <a
-                class="join-btn"
-                href="registration.html?tournament_id=${encodeURIComponent(id)}"
-            >
-                Join Tournament
-            </a>
-        `;
+    } catch (error) {
+
+      console.error("Supabase Error:", error);
+
+      status.style.display = "block";
+      status.className = "status error";
+
+      status.innerHTML =
+        "❌ Failed to load tournaments.<br><br>" +
+        escapeHTML(error.message) +
+        "<br><br>" +
+        "Please check your Supabase table and RLS policy.";
+
+    }
+  }
+
+
+  // ==============================
+  // JOIN TOURNAMENT
+  // ==============================
+
+  function joinTournament(id) {
+
+    if (!id) {
+      alert("Tournament ID not found.");
+      return;
     }
 
-
-    return `
-
-        <div class="tournament-card">
-
-            <div class="icon">
-                ${escapeHTML(icon)}
-            </div>
-
-            <h2>
-                ${escapeHTML(title)}
-            </h2>
-
-            <div class="info">
-                <span>Entry Fee</span>
-                <strong>
-                    ৳${escapeHTML(entryFee)}
-                </strong>
-            </div>
-
-            <div class="info">
-                <span>Prize Pool</span>
-                <strong>
-                    ৳${escapeHTML(prizePool)}
-                </strong>
-            </div>
-
-            <div class="info">
-                <span>Players</span>
-                <strong>
-                    ${escapeHTML(players)}
-                </strong>
-            </div>
-
-            <div class="info">
-                <span>Mode</span>
-                <strong>
-                    ${escapeHTML(mode)}
-                </strong>
-            </div>
-
-            <div class="status ${closed ? "closed" : ""}">
-                ${escapeHTML(statusText)}
-            </div>
-
-            ${joinButton}
-
-        </div>
-
-    `;
-}
+    // Registration page
+    window.location.href =
+      "registration.html?tournament_id=" +
+      encodeURIComponent(id);
+  }
 
 
-/* ================================
-   START
-================================ */
+  // ==============================
+  // SECURITY HELPERS
+  // ==============================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    loadTournaments
-);
+  function escapeHTML(value) {
+
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function escapeJS(value) {
+
+    return value
+      .replace(/\\/g, "\\\\")
+      .replace(/'/g, "\\'");
+  }
+
+
+  // ==============================
+  // START
+  // ==============================
+
+  loadTournaments();
 
 </script>
 
 </body>
-  </html>
+      </html>
