@@ -1,276 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SB Tournament - Support</title>
+  <title>SB Tournament - Support</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #111827, #1e3a8a, #4c1d95);
-            color: white;
-            padding: 20px;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 500px;
-            margin: 30px auto;
-        }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.10);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 8px;
-            font-size: 30px;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
 
-        .subtitle {
-            text-align: center;
-            color: #dbeafe;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
+    .subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+    }
 
-        label {
-            display: block;
-            margin: 15px 0 7px;
-            font-weight: bold;
-        }
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: bold;
+    }
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.95);
-            color: #111827;
-            font-size: 15px;
-        }
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #111827;
+      font-size: 15px;
+      outline: none;
+    }
 
-        textarea {
-            min-height: 130px;
-            resize: vertical;
-        }
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
 
-        input:focus,
-        textarea:focus {
-            box-shadow: 0 0 0 3px rgba(96,165,250,0.5);
-        }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #7c3aed, #2563eb);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-        button {
-            width: 100%;
-            margin-top: 22px;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: #2563eb;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-        button:hover {
-            background: #1d4ed8;
-        }
+    #message {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: bold;
+      min-height: 22px;
+    }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
+    .success {
+      color: #4ade80;
+    }
 
-        #message {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 14px;
-            min-height: 20px;
-        }
+    .error {
+      color: #f87171;
+    }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #bfdbfe;
-            text-decoration: none;
-        }
-
-        .back:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #cbd5e1;
-            font-size: 12px;
-        }
-    </style>
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #93c5fd;
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
     <div class="card">
 
-        <h1>🎧 Support</h1>
+      <h1>🎧 Support</h1>
 
-        <p class="subtitle">
-            Need help? Submit your support request below.
-        </p>
+      <p class="subtitle">
+        Need help? Send us your problem.
+      </p>
 
-        <form id="supportForm">
+      <form id="supportForm">
 
-            <label for="name">Name</label>
-            <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                required
-            >
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your name"
+          required
+        >
 
-            <label for="gameId">Game UID</label>
-            <input
-                type="text"
-                id="gameId"
-                placeholder="Enter your Game UID"
-                required
-            >
+        <label for="game_uid">Game UID</label>
+        <input
+          type="text"
+          id="game_uid"
+          placeholder="Enter your Game UID"
+          required
+        >
 
-            <label for="subject">Subject</label>
-            <input
-                type="text"
-                id="subject"
-                placeholder="What do you need help with?"
-                required
-            >
+        <label for="subject">Subject</label>
+        <input
+          type="text"
+          id="subject"
+          placeholder="What is the problem?"
+          required
+        >
 
-            <label for="problem">Problem</label>
-            <textarea
-                id="problem"
-                placeholder="Describe your problem..."
-                required
-            ></textarea>
+        <label for="problem">Problem Details</label>
+        <textarea
+          id="problem"
+          placeholder="Describe your problem..."
+          required
+        ></textarea>
 
-            <button type="submit" id="submitBtn">
-                Submit Support Request
-            </button>
+        <button type="submit" id="submitBtn">
+          Submit Support Request
+        </button>
 
-        </form>
+      </form>
 
-        <div id="message"></div>
+      <div id="message"></div>
 
-        <a href="index.html" class="back">
-            ← Back to Home
-        </a>
+      <a href="index.html" class="back">
+        ← Back to Home
+      </a>
 
     </div>
 
-    <div class="footer">
-        © 2026 SB Tournament. All rights reserved.
-    </div>
+  </div>
 
-</div>
 
-<script>
-const SUPABASE_URL = "https://ofcpuiubovcjxucqynyw.supabase.co";
-const SUPABASE_KEY = "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const form = document.getElementById("supportForm");
-const message = document.getElementById("message");
-const submitBtn = document.getElementById("submitBtn");
+  <script>
 
-form.addEventListener("submit", async function (event) {
+    // =========================================
+    // SUPABASE CONFIG
+    // =========================================
 
-    event.preventDefault();
+    const SUPABASE_URL =
+      "https://ofcpuiubovcjxucqynyw.supabase.co";
 
-    const name = document.getElementById("name").value.trim();
-    const gameId = document.getElementById("gameId").value.trim();
-    const subject = document.getElementById("subject").value.trim();
-    const problem = document.getElementById("problem").value.trim();
+    const SUPABASE_KEY =
+      "sb_publishable_NpG4P_VRdesJJkkzuBoanw_mbM3ivFS";
 
-    if (!name || !gameId || !subject || !problem) {
-        message.textContent = "Please fill in all fields.";
+
+    // Create Supabase client
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // =========================================
+    // FORM ELEMENTS
+    // =========================================
+
+    const form =
+      document.getElementById("supportForm");
+
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+    const message =
+      document.getElementById("message");
+
+
+    // =========================================
+    // SUBMIT SUPPORT REQUEST
+    // =========================================
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      message.textContent = "";
+      message.className = "";
+
+      const name =
+        document.getElementById("name").value.trim();
+
+      const game_uid =
+        document.getElementById("game_uid").value.trim();
+
+      const subject =
+        document.getElementById("subject").value.trim();
+
+      const problem =
+        document.getElementById("problem").value.trim();
+
+
+      // Basic validation
+      if (!name || !game_uid || !subject || !problem) {
+
+        message.textContent =
+          "Please fill in all fields.";
+
+        message.className = "error";
+
         return;
-    }
+      }
 
-    message.textContent = "Sending...";
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending...";
 
-    try {
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
 
-        const response = await fetch(
-            `${SUPABASE_URL}/rest/v1/support`,
-            {
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY,
-                    "Authorization": `Bearer ${SUPABASE_KEY}`,
-                    "Prefer": "return=minimal"
-                },
+      try {
 
-                body: JSON.stringify({
-                    name: name,
-                    game_uid: gameId,
-                    subject: subject,
-                    problem: problem,
-                    status: "pending"
-                })
-            }
-        );
+        // Insert into Supabase
+        const { error } =
+          await supabaseClient
+            .from("support")
+            .insert({
+              name: name,
+              game_uid: game_uid,
+              subject: subject,
+              problem: problem,
+              status: "pending"
+            });
 
-        if (!response.ok) {
 
-            const errorText = await response.text();
+        // Handle Supabase error
+        if (error) {
 
-            console.error("Supabase Error:", errorText);
+          console.error("Supabase error:", error);
 
-            throw new Error(errorText);
+          message.textContent =
+            "Failed to submit request. Please try again.";
+
+          message.className = "error";
+
+          return;
         }
 
-        message.textContent =
-            "✅ Support request submitted successfully!";
 
+        // Success
+        message.textContent =
+          "✅ Support request submitted successfully!";
+
+        message.className = "success";
+
+
+        // Clear form
         form.reset();
 
-    } catch (error) {
 
-        console.error("Support request error:", error);
+      } catch (error) {
+
+        console.error("Unexpected error:", error);
 
         message.textContent =
-            "❌ Failed to submit request. Please try again.";
+          "Something went wrong. Please try again.";
 
-    } finally {
+        message.className = "error";
+
+      } finally {
 
         submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Support Request";
-    }
 
-});
-</script>
+        submitBtn.textContent =
+          "Submit Support Request";
+
+      }
+
+    });
+
+  </script>
 
 </body>
-              </html>
+    </html>
